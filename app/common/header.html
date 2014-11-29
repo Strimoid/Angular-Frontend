@@ -1,0 +1,134 @@
+      <!-- navbar header -->
+      <div class="navbar-header {{app.settings.navbarHeaderColor}}">
+        <button class="pull-right visible-xs dk" ui-toggle-class="show" data-target=".navbar-collapse">
+          <i class="glyphicon glyphicon-cog"></i>
+        </button>
+        <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".app-aside" ui-scroll="app">
+          <i class="glyphicon glyphicon-align-justify"></i>
+        </button>
+        <!-- brand -->
+        <a href class="navbar-brand text-lt" ui-sref="app.content.list">
+          <i class="fa fa-linux"></i>
+          <img src="img/logo.png" alt="." class="hide">
+          <span class="hidden-folded m-l-xs">{{ app.name }}</span>
+        </a>
+        <!-- / brand -->
+      </div>
+      <!-- / navbar header -->
+
+      <!-- navbar collapse -->
+      <div class="collapse navbar-collapse box-shadow {{app.settings.navbarCollapseColor}}">
+        <!-- buttons -->
+        <div class="nav navbar-nav m-l-sm hidden-xs">
+          <a href class="btn no-shadow navbar-btn" ng-click="app.settings.asideFolded = !app.settings.asideFolded">
+            <i class="fa {{app.settings.asideFolded ? 'fa-indent' : 'fa-dedent'}} fa-fw"></i>
+          </a>
+        </div>
+        <!-- / buttons -->
+
+        <ul class="nav navbar-nav hidden-sm">
+            <li><a href ng-click="switchTab('content')">Treści</a></li>
+            <li><a href ng-click="switchTab('comment')">Komentarze</a></li>
+            <li><a href ng-click="switchTab('entry')">Wpisy</a></li>
+        </ul>
+
+        <!-- search form -->
+        <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search">
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control input-sm bg-light no-border rounded padder" placeholder="Szukaj...">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
+              </span>
+            </div>
+          </div>
+        </form>
+        <!-- / search form -->
+
+        <!-- nabar right -->
+        <ul class="nav navbar-nav navbar-right">
+            <li ng-if="Auth.guest()">
+                <a href ng-click="openLoginModal()">logowanie / rejestracja</a>
+            </li>
+            <li ng-if="Auth.check()">
+                <a href ng-click="addContent()">Dodaj treść</a>
+            </li>
+          <li class="dropdown" dropdown ng-if="Auth.check()">
+            <a href class="dropdown-toggle" dropdown-toggle>
+              <i class="icon-bell fa-fw"></i>
+              <span class="visible-xs-inline">Powiadomienia</span>
+              <span class="badge badge-sm up bg-danger pull-right-xs" ng-show="notifications_unread">{{ notifications_unread }}</span>
+            </a>
+            <!-- dropdown -->
+            <div class="dropdown-menu w-xl animated fadeInUp">
+              <div class="panel bg-white">
+                <div class="panel-heading b-light bg-light">
+                    <strong ng-show="notifications_unread">Masz <span>{{ notifications_unread }}</span> nowe powiadomienia</strong>
+                    <strong ng-show="!notifications_unread">Nie masz nowych powiadomień</strong>
+                </div>
+                <div class="list-group" ui-jq="slimScroll" ui-options="{height:'250px'}">
+                  <a href class="media list-group-item" ng-repeat="notification in notifications">
+                    <span class="pull-left thumb-sm">
+                      <img src="img/a0.jpg" alt="..." class="img-circle">
+                    </span>
+                    <span class="media-body block m-b-none">
+                      {{ notification.title }}<br>
+                      <small class="text-muted">
+
+                      </small>
+                    </span>
+                  </a>
+                </div>
+                <div class="panel-footer text-sm">
+                  <a href class="pull-right"><i class="fa fa-cog"></i></a>
+                  <a ui-sref="app.notification.list"
+                      data-toggle="class:show animated fadeInRight">
+                      Wszystkie powiadomienia
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!-- / dropdown -->
+          </li>
+
+          <li class="dropdown" dropdown ng-if="Auth.check()">
+            <a href class="dropdown-toggle clear" data-toggle="dropdown" dropdown-toggle>
+              <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                <img ng-src="{{ Auth.user.avatar | cdn:'avatars':50:50 }}" alt="{{ Auth.user.name }}">
+                <i class="on md b-white bottom"></i>
+              </span>
+              <span class="hidden-sm hidden-md">{{ Auth.user.name }}</span> <b class="caret"></b>
+            </a>
+            <!-- dropdown -->
+            <ul class="dropdown-menu animated fadeInRight w">
+              <li>
+                <a ui-sref="app.user({ user: Auth.user.name })">
+                    <i class="icon-user m-r-xs"></i> Profil
+                </a>
+              </li>
+              <li>
+                <a ui-sref="app.conversations">
+                    <i class="icon-envelope m-r-xs"></i> Konwersacje
+                </a>
+              </li>
+              <li>
+                <a ui-sref="app.settings">
+                    <i class="icon-settings m-r-xs"></i> Ustawienia
+                </a>
+              </li>
+
+              <li class="divider"></li>
+
+              <li>
+                <a ng-click="logout()">
+                    <i class="icon-logout m-r-xs"></i> Wyloguj
+                </a>
+              </li>
+            </ul>
+            <!-- / dropdown -->
+          </li>
+        </ul>
+        <!-- / navbar right -->
+
+      </div>
+      <!-- / navbar collapse -->

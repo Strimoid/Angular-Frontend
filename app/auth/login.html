@@ -1,0 +1,60 @@
+<div class="modal-body">
+    <tabset class="nav-tabs-alt" justified="true">
+        <tab>
+            <tab-heading>
+                <i class="icon-login text-md text-muted wrapper-sm"></i>
+                Logowanie
+            </tab-heading>
+            <div class="wrapper-md">
+                <form novalidate class="form-validation form-horizontal" id="loginForm" name="loginForm" ng-submit="ok()">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Nazwa</label>
+
+                        <div class="input-group m-b col-lg-10">
+                            <span class="input-group-addon">
+                                <i class="icon-user"></i>
+                            </span>
+
+                            <input type="text" class="form-control" placeholder="Nazwa użytkownika..." ng-model="credentials.username" ui-validate="!invalidCredentials" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Hasło</label>
+
+                        <div class="input-group m-b col-lg-10">
+                            <span class="input-group-addon">
+                                <i class="icon-lock"></i>
+                            </span>
+
+                            <input type="password" class="form-control" placeholder="Hasło..." ng-model="credentials.password" ui-validate="!invalidCredentials" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <div class="checkbox">
+                                <label class="i-checks">
+                                    <input type="checkbox" ng-model="remember"><i></i> Zapamiętaj
+                                </label>
+
+                                <a href="" class="pull-right">Ojej, zapomniałem hasła...</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </tab>
+        <tab>
+            <tab-heading>
+                <i class="icon-user-follow text-md text-muted wrapper-sm"></i>
+                Rejestracja
+            </tab-heading>
+            <div class="wrapper-md">
+                Jeszcze ni ma, ale będzie ;)
+            </div>
+        </tab>
+    </tabset>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">Anuluj</button>
+    <button class="btn btn-primary" type="submit" form="loginForm" ladda="loading">OK</button>
+</div>

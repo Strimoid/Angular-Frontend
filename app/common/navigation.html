@@ -1,0 +1,77 @@
+<ul class="nav" ng-controller="Navigation">
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span>Nawigacja</span>
+    </li>
+
+    <li>
+        <a ng-click="changeFolder({ _id: 'all', name: 'Wszystko' })">
+            <i class="fa fa-home"></i>
+            <span>Wszystko</span>
+        </a>
+    </li>
+
+    <li ng-class="{ active: false }" ng-repeat="folder in specialGroups" ng-if="Auth.check()">
+        <a href class="auto" ng-click="changeFolder(folder)">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+
+            <i class="glyphicon glyphicon-briefcase icon"></i>
+            <span>{{ folder.name }}</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li class="nav-sub-header">
+                <a href ng-click="changeFolder(folder)">
+                    <span>{{ folder.name }}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" ng-repeat="group in folder.groups">
+                <a ng-click="changeGroup(group)">
+                    <img ng-src="{{ group.avatar | cdn:'groups' }}" style="width: 10px" class="m-r-xs" ng-if="group.avatar">
+                    <span>{{ group.name }}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="line dk"></li>
+
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span>Twoje foldery</span>
+    </li>
+
+    <li ng-class="{ active: false }" ng-repeat="folder in Auth.user.folders" ng-if="Auth.check()">
+        <a href class="auto" ng-click="changeFolder(folder)">
+            <span class="pull-right text-muted">
+              <i class="fa fa-fw fa-angle-right text"></i>
+              <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+
+            <i class="glyphicon glyphicon-briefcase icon"></i>
+            <span>{{ folder.name }}</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li class="nav-sub-header">
+                <a href ng-click="changeFolder(folder)">
+                    <span>{{ folder.name }}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" ng-repeat="group in folder.groups">
+                <a ng-click="changeGroup(group)">
+                    <img ng-src="{{ group.avatar | cdn:'groups' }}" style="width: 10px" class="m-r-xs" ng-if="group.avatar">
+                    <span>{{ group.name }}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="line dk"></li>
+
+    <li>
+        <a ui-sref="app.group.list">
+            <i class="fa fa-sitemap"></i>
+            <span>Lista grup</span>
+        </a>
+    </li>
+</ul>

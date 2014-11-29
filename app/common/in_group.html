@@ -1,0 +1,38 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm">
+
+<ui-view></ui-view>
+
+<div class="col w-md bg-white-only b-l bg-auto bg-auto-right no-border-xs" ng-controller="Sidebar">
+    <tabset class="nav-tabs-alt" justified="true">
+        <tab>
+            <tab-heading>
+                <i class="icon-info text-md text-muted wrapper-sm"></i>
+            </tab-heading>
+            <div class="wrapper-md">
+                <div class="m-b-sm text-md">{{ Session.currentGroup.name }}</div>
+                <ul class="list-group no-bg no-borders pull-in">
+                    <li class="list-group-item">
+                        <a herf class="pull-left thumb-sm avatar m-r" ng-if="Session.currentGroup.avatar">
+                            <img ng-src="{{ Session.currentGroup.avatar | cdn: 'groups' }}" alt="{{ Session.currentGroup.name }}" class="img-circle">
+                        </a>
+
+                        <div class="clear">
+                            <small class="text-muted">{{ Session.currentGroup.description }}</small>
+                        </div>
+                    </li>
+                </ul>
+                <div ng-bind-html="Session.currentGroup.sidebar"></div>
+            </div>
+        </tab>
+        <tab>
+            <tab-heading>
+                <i class="icon-bar-chart text-md text-muted wrapper-sm"></i>
+            </tab-heading>
+            <div class="wrapper-md">
+                <!-- todo: some cool stats -->
+            </div>
+        </tab>
+    </tabset>
+</div>
+
+</div>

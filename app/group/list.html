@@ -1,0 +1,54 @@
+<div class="bg-light lter b-b wrapper-md">
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <h1 class="m-n font-thin h3 text-black">Grupy</h1>
+        </div>
+        <div class="col-sm-6 text-right hidden-xs">
+            <button class="btn btn-sm btn-default btn-addon pull-right" ng-click="refresh()">
+                <i class="fa fa-refresh" ng-class="{ 'fa-spin': loading }"></i>
+                Odśwież
+            </button>
+
+            <div class="btn-group dropdown pull-right" dropdown>
+                <button class="btn btn-sm btn-default btn-addon dropdown-toggle pull-right m-r-sm"
+                        aria-haspopup="true" aria-expanded="false" dropdown-toggle>
+                    <i class="fa fa-sort"></i> Sortowanie <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href ng-click="sortBy('created_at')"><i class="icon-calendar m-r-sm"></i> Najnowsze</a></li>
+                    <li><a href ng-click="sortBy('score')"><i class="icon-trophy m-r-sm"></i> Wynik</a></li>
+                    <li><a href ng-click="sortBy('comments')"><i class="icon-bubbles m-r-sm"></i> Komentarze</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper-md group_list">
+    <div class="panel panel-default" ng-repeat="group in groups track by group._id">
+      <div class="panel-heading">
+        <div class="clearfix">
+          <a href="" class="pull-left thumb-md avatar b-3x m-r">
+            <img ng-src="{{ group.avatar | cdn:'groups' }}" alt="{{ group.name }}" ng-if="group.avatar">
+          </a>
+          <div class="clear">
+            <div class="h3 m-t-xs m-b-xs">
+              {{ group.name }}
+              <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+            </div>
+            <small class="text-muted">{{ group.description }}</small>
+          </div>
+        </div>
+      </div>
+      <div class="hbox text-center b-t b-light">
+              <a href="" class="col padder-v text-muted b-r b-light">
+                <div class="h4">5032</div>
+                <span>Posts</span>
+              </a>
+              <a href="" class="col padder-v text-muted">
+                <div class="h4">689</div>
+                <span>Photos</span>
+              </a>
+            </div>
+    </div>
+</div>

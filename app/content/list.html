@@ -1,0 +1,91 @@
+<div class="bg-light lter b-b wrapper-md">
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <h1 class="m-n font-thin h3 text-black">Dashboard</h1>
+        </div>
+        <div class="col-sm-6 text-right hidden-xs">
+            <button class="btn btn-sm btn-default btn-addon pull-right" ng-click="refresh()">
+                <i class="fa fa-refresh" ng-class="{ 'fa-spin': loading }"></i>
+                <span translate>Refresh</span>
+            </button>
+
+            <div class="btn-group dropdown pull-right" dropdown>
+                <button class="btn btn-sm btn-default btn-addon dropdown-toggle pull-right m-r-sm"
+                        aria-haspopup="true" aria-expanded="false" dropdown-toggle>
+                    <i class="fa fa-sort"></i>
+                    <span translate>Sort by</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href ng-click="sortBy('created_at')">
+                            <i class="icon-calendar m-r-sm"></i>
+                            <span translate>Newest</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href ng-click="sortBy('score')">
+                            <i class="icon-trophy m-r-sm"></i>
+                            <span translate>Score</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href ng-click="sortBy('comments')">
+                            <i class="icon-bubbles m-r-sm"></i>
+                            <span translate>Comments</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper-md">
+    <div class="blog-post" infinite-scroll="loadMore()"
+         infinite-scroll-disabled="loading" infinite-scroll-distance="1">
+        <div class="content" ng-repeat="content in contents track by content._id">
+            <div class="vote-buttons pull-left" ng-controller="Vote">
+                <button class="btn m-b-xs w-xs btn-default btn-addon" ng-click="vote(content, 'content', true)"
+                        ng-class="{ 'btn-success': content.vote_state == 'uv' }"
+                        tooltip-html-unsafe="{{ showList(content, true) }}" tooltip-trigger="mouseenter">
+                    <i class="icon-like"></i> {{ content.uv }}
+                </button>
+                <button class="btn m-b-xs w-xs btn-default btn-addon" ng-click="vote(content, 'content', false)"
+                        ng-class="{ 'btn-danger': content.vote_state == 'dv' }"
+                        tooltip-html-unsafe="{{ showList(content, false) }}" tooltip-trigger="mouseenter">
+                    <i class="icon-dislike"></i> {{ content.dv }}
+                </button>
+            </div>
+
+            <div class="panel">
+                <div class="embed "ng-show="content.showEmbed" ng-bind-html="content.embedCode"></div>
+                <div ng-show="content.thumbnail" class="c-thumbnail" ng-click="embedMedia(content)" ng-hide="content.showEmbed">
+                    <img ng-src="{{ content.thumbnail | cdn:'thumbnails':500:250 }}" ng-if="content.thumbnail">
+                </div>
+                <div class="wrapper-lg" ng-hide="content.showEmbed">
+                    <h2 class="m-t-none">
+                        <a href="{{ content.url }}">{{ content.title }}</a>
+                    </h2>
+
+                    <div>
+                        <p ng-bind-html="content.description"></p>
+                    </div>
+                    <div class="line line-lg b-b b-light"></div>
+                    <div class="text-muted">
+                        <i class="fa fa-tag text-muted"></i> <a href ui-sref="app.g.content.list({ group: content.group._id })" class="m-r-sm">{{ content.group.name }}</a>
+                        <i class="fa fa-user text-muted"></i> <a href class="m-r-sm">{{ content.user.name }}</a>
+                        <i class="fa fa-clock-o text-muted"></i> <span am-time-ago="content.created_at"></span>
+                        <a ui-sref="app.g.content.detail({ group: content.group._id, id: content._id })" class="m-l-sm">
+                            <i class="fa fa-comment-o text-muted"></i>
+                            <span translate translate-n="content.comments_count"
+                                translate-plural="{{$count}} comments">1 comment</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

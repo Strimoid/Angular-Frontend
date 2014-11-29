@@ -1,0 +1,8 @@
+<ui-select ng-model="newEntry.group" theme="bootstrap" class="pull-right m-r-sm w" required>
+  <ui-select-match placeholder="Wybierz grupę...">{{$select.selected.name}}</ui-select-match>
+  <ui-select-choices repeat="group in groups track by group._id | propsFilter: {name: $select.search, description: $select.search}"
+      refresh="loadGroups($select.search)" refresh-delay="300">
+    <div ng-bind-html="group.name | highlight: $select.search"></div>
+    <small ng-bind-html="group.description | highlight: $select.search"></small>
+  </ui-select-choices>
+</ui-select>

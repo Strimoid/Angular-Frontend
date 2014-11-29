@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+<head>
+    <base href="/">
+
+    <meta charset="utf-8" />
+    <title>Strimoid</title>
+    <meta name="description" content="Strimoid" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <link rel="stylesheet" href="/dist/css/deps.css" type="text/css" />
+
+    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/simple-line-icons.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/font.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/app.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/strimoid.css" type="text/css" />
+</head>
+<body ng-controller="AppCtrl">
+    <div class="app" id="app"
+        ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed, 'app-aside-folded':app.settings.asideFolded}"
+        ui-view></div>
+
+    <!-- Deps -->
+    <script src="/dist/js/deps.js"></script>
+
+    <!-- App -->
+    <script src="/dist/js/app.js"></script>
+    <script src="/dist/js/templates.js"></script>
+    <script src="/dist/js/translations.js"></script>
+</body>
+</html>

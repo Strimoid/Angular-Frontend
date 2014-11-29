@@ -1,0 +1,54 @@
+<div class="modal-body">
+    <tabset class="nav-tabs-alt" justified="true">
+        <tab>
+            <tab-heading>
+                <i class="icon-link text-md text-muted wrapper-sm"></i>
+                Link
+            </tab-heading>
+            <div class="wrapper-md">
+                <form class="form-validation">
+                    <div class="form-group">
+                        <label>Adres URL</label>
+                        <input type="url" class="form-control" placeholder="http://..." ng-model="content.url" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tytuł treści</label>
+                        <input type="text" class="form-control" placeholder="Tytuł..." ng-model="content.title" ng-maxlength="128" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Opis treści (max 255 znaków)</label>
+                        <textarea class="form-control" rows="3" placeholder="Opis..." ng-model="content.description" ng-maxlength="255"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Grupa</label>
+                        <input type="text" class="form-control" placeholder="Grupa..." ng-model="content.group">
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-inline i-checks">
+                            <input type="checkbox" ng-model="content.thumbnail"><i></i> Miniaturka
+                        </label>
+                        <label class="checkbox-inline i-checks">
+                            <input type="checkbox" ng-model="content.nsfw"><i></i> +18
+                        </label>
+                        <label class="checkbox-inline i-checks">
+                            <input type="checkbox" ng-model="content.eng"><i></i> j. ang
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </tab>
+        <tab>
+            <tab-heading>
+                <i class="icon-note text-md text-muted wrapper-sm"></i>
+                Treść własna
+            </tab-heading>
+            <div class="wrapper-md">
+
+            </div>
+        </tab>
+    </tabset>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">Anuluj</button>
+    <button class="btn btn-primary" ng-click="ok()" ladda="loading">Dodaj</button>
+</div>

@@ -1,0 +1,103 @@
+<div class="bg-light lter b-b wrapper-md">
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <h1 class="m-n font-thin h3 text-black">Komentarze</h1>
+        </div>
+        <div class="col-sm-6 text-right hidden-xs">
+            <button class="btn btn-sm btn-default btn-addon pull-right" ng-click="refresh()">
+                <i class="fa fa-refresh" ng-class="{ 'fa-spin': loading }"></i>
+                Odśwież
+            </button>
+
+            <div class="btn-group dropdown pull-right" dropdown>
+                <button class="btn btn-sm btn-default btn-addon dropdown-toggle pull-right m-r-sm"
+                        aria-haspopup="true" aria-expanded="false" dropdown-toggle>
+                    <i class="fa fa-sort"></i> Sortowanie <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href ng-click="sortBy('created_at')"><i class="icon-calendar m-r-sm"></i> Najnowsze</a></li>
+                    <li><a href ng-click="sortBy('score')"><i class="icon-trophy m-r-sm"></i> Wynik</a></li>
+                    <li><a href ng-click="sortBy('comments')"><i class="icon-bubbles m-r-sm"></i> Komentarze</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper-md">
+    <div class="m-b b-l m-l-md streamline" ng-hide="!comments.length">
+        <div ng-repeat="comment in comments">
+            <a class="pull-left thumb-sm avatar m-l-n-md">
+                <img ng-src="http://static.strimoid.pl/uploads/100x100/avatars/{{comment.user.avatar}}"
+                     class="img-circle" alt="{{ comment.user.name }}">
+            </a>
+
+            <div class="m-l-lg panel b-a">
+                <div class="panel-heading pos-rlt b-b b-light">
+                    <span class="arrow left"></span>
+                    <a href="">{{ comment.user.name }}</a>
+
+                            <span class="text-muted m-l-sm pull-right">
+                                <i class="fa fa-clock-o"></i>
+                                <span am-time-ago="comment.created_at"></span>
+                            </span>
+                </div>
+                <div class="panel-body">
+                    <div ng-bind-html="comment.text"></div>
+
+                    <div class="m-t-sm" ng-controller="Vote">
+                        <a href="" class="btn btn-default btn-xs" ng-click="vote(comment, 'comment', true)"
+                            ng-class="{ 'btn-success': comment.vote_state == 'uv' }">
+                            <i class="fa fa-arrow-up text-muted"></i>
+                            {{ comment.uv }}
+                        </a>
+                        <a href="" class="btn btn-default btn-xs" ng-click="vote(comment, 'comment', false)"
+                            ng-class="{ 'btn-danger': comment.vote_state == 'dv' }">
+                            <i class="fa fa-arrow-down text-muted"></i>
+                            {{ comment.dv }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- .comment-reply -->
+            <div class="m-l-lg" ng-repeat="reply in comment.replies">
+                <a class="pull-left thumb-sm avatar">
+                    <img ng-src="http://static.strimoid.pl/uploads/100x100/avatars/{{ reply.user.avatar }}"
+                         alt="{{ reply.user.name }}">
+                </a>
+
+                <div class="m-l-xxl panel b-a">
+                    <div class="panel-heading pos-rlt b-b b-light">
+                        <span class="arrow left"></span>
+                        <a href="">{{ reply.user.name }}</a>
+
+                                <span class="text-muted m-l-sm pull-right">
+                                    <i class="fa fa-clock-o"></i>
+                                    <span am-time-ago="reply.created_at"></span>
+                                </span>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-bind-html="reply.text"></div>
+
+                        <div class="m-t-sm">
+                            <a href="" class="btn btn-default btn-xs">
+                                <i class="fa fa-arrow-up text-muted"></i>
+                                {{ reply.uv }}
+                            </a>
+                            <a href="" ui-toggle-class="" class="btn btn-default btn-xs">
+                                <i class="fa fa-arrow-down text-muted"></i>
+                                {{ reply.dv }}
+                            </a>
+                            <a href="" class="btn btn-default btn-xs">
+                                <i class="fa fa-mail-reply text-muted"></i> odpowiedz
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / .comment-reply -->
+        </div>
+    </div>
+
+    <!-- comment add form -->
+</div>
