@@ -45,17 +45,9 @@
     <div class="blog-post" infinite-scroll="loadMore()"
          infinite-scroll-disabled="loading" infinite-scroll-distance="1">
         <div class="content" ng-repeat="content in contents track by content._id">
-            <div class="vote-buttons pull-left" ng-controller="Vote">
-                <button class="btn m-b-xs w-xs btn-default btn-addon" ng-click="vote(content, 'content', true)"
-                        ng-class="{ 'btn-success': content.vote_state == 'uv' }"
-                        tooltip-html-unsafe="{{ showList(content, true) }}" tooltip-trigger="mouseenter">
-                    <i class="icon-like"></i> {{ content.uv }}
-                </button>
-                <button class="btn m-b-xs w-xs btn-default btn-addon" ng-click="vote(content, 'content', false)"
-                        ng-class="{ 'btn-danger': content.vote_state == 'dv' }"
-                        tooltip-html-unsafe="{{ showList(content, false) }}" tooltip-trigger="mouseenter">
-                    <i class="icon-dislike"></i> {{ content.dv }}
-                </button>
+            <div class="vote-buttons pull-left">
+                <vote-buttons object="content" type="content"
+                    btn-class="btn-addon m-b-xs w-xs"></vote-buttons>
             </div>
 
             <div class="panel">

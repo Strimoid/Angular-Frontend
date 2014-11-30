@@ -79,17 +79,9 @@
                 <div class="panel-body">
                     <div ng-bind-html="entry.text"></div>
 
-                    <div class="m-t-sm" ng-controller="Vote">
-                        <a class="btn btn-default btn-xs" ng-click="vote(entry, 'entry', true)"
-                            ng-class="{ 'btn-success': entry.vote_state == 'uv' }">
-                            <i class="fa fa-arrow-up text-muted"></i>
-                            {{ entry.uv }}
-                        </a>
-                        <a class="btn btn-default btn-xs" ng-click="vote(entry, 'entry', false)"
-                            ng-class="{ 'btn-danger': entry.vote_state == 'dv' }">
-                            <i class="fa fa-arrow-down text-muted"></i>
-                            {{ entry.dv }}
-                        </a>
+                    <div class="m-t-sm">
+                        <vote-buttons object="entry" type="entry"
+                            btn-class="btn-xs"></vote-buttons>
                         <a class="btn btn-default btn-xs" ng-if="Auth.check()"
                             ng-click="showReplyBox(entry, entry)"
                             move-focus-to="#reply-box-{{ entry._id }}">
@@ -99,12 +91,14 @@
                 </div>
             </div>
 
+            <!-- show more replies -->
             <div class="m-l-lg m-b" ng-if="entry.replies.length > 2">
                 <button class="btn btn-default btn-block" ng-if="!entry.visibleReplies" ng-click="entry.visibleReplies = entry.replies.length">
                     <i class="fa fa-bars pull-left"></i>
                     Pokaż pozostałe wpisy ({{ entry.replies.length-2 }} odpowiedzi)
                     </button>
             </div>
+            <!-- /show more replies -->
 
             <!-- .comment-reply -->
             <div class="m-l-lg" ng-repeat="reply in entry.replies | limitTo: (entry.visibleReplies || -2)">
@@ -127,14 +121,8 @@
                         <div ng-bind-html="reply.text"></div>
 
                         <div class="m-t-sm">
-                            <a href="" class="btn btn-default btn-xs">
-                                <i class="fa fa-arrow-up text-muted"></i>
-                                {{ reply.uv }}
-                            </a>
-                            <a href="" ui-toggle-class="" class="btn btn-default btn-xs">
-                                <i class="fa fa-arrow-down text-muted"></i>
-                                {{ reply.dv }}
-                            </a>
+                            <vote-buttons object="reply" type="entry_reply"
+                                btn-class="btn-xs"></vote-buttons>
                             <button class="btn btn-default btn-xs" ng-if="Auth.check()"
                                 ng-click="showReplyBox(entry, reply)"
                                 move-focus-to="#reply-box-{{ entry._id }}">
@@ -145,6 +133,8 @@
                 </div>
             </div>
             <!-- / .comment-reply -->
+
+            <!-- reply box -->
             <div class="m-l-lg" ng-if="entry.showReplyBox">
                 <a class="pull-left thumb-sm avatar">
                     <img ng-src="http://static.strimoid.pl/uploads/100x100/avatars/{{ Auth.user.avatar }}"
@@ -175,6 +165,7 @@
                     </form>
                 </div>
             </div>
+            <!-- /reply box -->
         </div>
     </div>
 

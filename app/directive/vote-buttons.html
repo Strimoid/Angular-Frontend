@@ -1,0 +1,10 @@
+<button class="btn btn-default {{ btnClass }}" ng-click="vote(object, type, true)"
+        ng-class="{ 'btn-success': object.vote_state == 'uv' }"
+        tooltip-html-unsafe="{{ showList(object, true) }}" tooltip-trigger="mouseenter">
+    <i class="fa fa-arrow-up text-muted"></i> {{ object.uv }}
+</button>
+<button class="btn btn-default {{ btnClass }}" ng-click="vote(object, type, false)"
+        ng-class="{ 'btn-danger': object.vote_state == 'dv' }"
+        tooltip-html-unsafe="{{ showList(object, false) }}" tooltip-trigger="mouseenter">
+    <i class="fa fa-arrow-down text-muted"></i> {{ object.dv }}
+</button>
