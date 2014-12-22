@@ -3,12 +3,12 @@
         <tab>
             <tab-heading>
                 <i class="icon-login text-md text-muted wrapper-sm"></i>
-                Logowanie
+                <span translate>Login</span>
             </tab-heading>
             <div class="wrapper-md">
                 <form novalidate class="form-validation form-horizontal" id="loginForm" name="loginForm" ng-submit="ok()">
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Nazwa</label>
+                        <label class="col-lg-2 control-label" translate>Name</label>
 
                         <div class="input-group m-b col-lg-10">
                             <span class="input-group-addon">
@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Hasło</label>
+                        <label class="col-lg-2 control-label" translate>Password</label>
 
                         <div class="input-group m-b col-lg-10">
                             <span class="input-group-addon">
@@ -46,7 +46,7 @@
         <tab>
             <tab-heading>
                 <i class="icon-user-follow text-md text-muted wrapper-sm"></i>
-                Rejestracja
+                <span translate>Register</span>
             </tab-heading>
             <div class="wrapper-md">
                 Jeszcze ni ma, ale będzie ;)
@@ -55,6 +55,7 @@
     </tabset>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default" ng-click="cancel()">Anuluj</button>
-    <button class="btn btn-primary" type="submit" form="loginForm" ladda="loading">OK</button>
+    <button class="btn btn-default" ng-click="cancel()" translate>Cancel</button>
+    <button class="btn btn-primary" type="submit" form="loginForm"
+        ladda="loading" translate>OK</button>
 </div>

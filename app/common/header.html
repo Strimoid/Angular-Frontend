@@ -27,9 +27,9 @@
         <!-- / buttons -->
 
         <ul class="nav navbar-nav hidden-sm">
-            <li><a href ng-click="switchTab('content')">Treści</a></li>
-            <li><a href ng-click="switchTab('comment')">Komentarze</a></li>
-            <li><a href ng-click="switchTab('entry')">Wpisy</a></li>
+            <li><a href ng-click="switchTab('content')" translate>Contents</a></li>
+            <li><a href ng-click="switchTab('comment')" translate>Comments</a></li>
+            <li><a href ng-click="switchTab('entry')" translate>Entries</a></li>
         </ul>
 
         <!-- search form -->
@@ -48,16 +48,17 @@
         <!-- nabar right -->
         <ul class="nav navbar-nav navbar-right">
             <li ng-if="Auth.guest()">
-                <a href ng-click="openLoginModal()">logowanie / rejestracja</a>
+                <a href ng-click="openLoginModal()" translate>login / register</a>
             </li>
             <li ng-if="Auth.check()">
-                <a href ng-click="addContent()">Dodaj treść</a>
+                <a href ng-click="addContent()" translate>Add content</a>
             </li>
           <li class="dropdown" dropdown ng-if="Auth.check()">
             <a href class="dropdown-toggle" dropdown-toggle>
               <i class="icon-bell fa-fw"></i>
-              <span class="visible-xs-inline">Powiadomienia</span>
-              <span class="badge badge-sm up bg-danger pull-right-xs" ng-show="notifications_unread">{{ notifications_unread }}</span>
+              <span class="visible-xs-inline" translate>Notifications</span>
+              <span class="badge badge-sm up bg-danger pull-right-xs"
+                  ng-show="notifications_unread">{{ notifications_unread }}</span>
             </a>
             <!-- dropdown -->
             <div class="dropdown-menu w-xl animated fadeInUp">
@@ -81,9 +82,9 @@
                 </div>
                 <div class="panel-footer text-sm">
                   <a href class="pull-right"><i class="fa fa-cog"></i></a>
-                  <a ui-sref="app.notification.list"
+                  <a ui-sref="app.notification.list" translate
                       data-toggle="class:show animated fadeInRight">
-                      Wszystkie powiadomienia
+                      All notifications
                   </a>
                 </div>
               </div>
@@ -97,23 +98,27 @@
                 <img ng-src="{{ Auth.user.avatar | cdn:'avatars':50:50 }}" alt="{{ Auth.user.name }}">
                 <i class="on md b-white bottom"></i>
               </span>
-              <span class="hidden-sm hidden-md">{{ Auth.user.name }}</span> <b class="caret"></b>
+              <span class="hidden-sm hidden-md">{{ Auth.user.name }}</span>
+              <b class="caret"></b>
             </a>
             <!-- dropdown -->
             <ul class="dropdown-menu animated fadeInRight w">
               <li>
                 <a ui-sref="app.user({ user: Auth.user.name })">
-                    <i class="icon-user m-r-xs"></i> Profil
+                    <i class="icon-user m-r-xs"></i>
+                    <span translate>My profile</span>
                 </a>
               </li>
               <li>
                 <a ui-sref="app.conversations">
-                    <i class="icon-envelope m-r-xs"></i> Konwersacje
+                    <i class="icon-envelope m-r-xs"></i>
+                    <span translate>Conversations</span>
                 </a>
               </li>
               <li>
                 <a ui-sref="app.settings">
-                    <i class="icon-settings m-r-xs"></i> Ustawienia
+                    <i class="icon-settings m-r-xs"></i>
+                    <span translate>Settings</span>
                 </a>
               </li>
 
@@ -121,7 +126,8 @@
 
               <li>
                 <a ng-click="logout()">
-                    <i class="icon-logout m-r-xs"></i> Wyloguj
+                    <i class="icon-logout m-r-xs"></i>
+                    <span translate>Logout</span>
                 </a>
               </li>
             </ul>
