@@ -108,12 +108,12 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('app.settings.profile', {
             url: '/profil',
-            templateUrl: 'settings/tabs/profile.html',
+            templateUrl: 'settings/tabs/profile.html'
         })
         .state('app.user', {
             url: '/u/:user',
             templateUrl: 'user/profile.html',
-            //controller: 'UserProfile'
+            controller: 'UserProfile'
         })
         .state('app.conversations', {
             url: '/konwersacje',

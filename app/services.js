@@ -84,4 +84,7 @@ angular.module('app.services', [])
     })
     .factory('Entries', function(Restangular) {
         return Restangular.all('entries');
+    })
+    .factory('Users', function(Restangular) {
+        return Restangular.service('users');
     });
