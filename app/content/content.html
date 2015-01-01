@@ -67,18 +67,10 @@
                 <div class="panel-body">
                     <div ng-bind-html="comment.text"></div>
 
-                    <div class="m-t-sm" ng-controller="Vote">
-                        <a href="" class="btn btn-default btn-xs" ng-click="vote(comment, 'comment', true)"
-                            ng-class="{ 'btn-success': comment.vote_state == 'uv' }">
-                            <i class="fa fa-arrow-up text-muted"></i>
-                            {{ comment.uv }}
-                        </a>
-                        <a href="" class="btn btn-default btn-xs" ng-click="vote(comment, 'comment', false)"
-                            ng-class="{ 'btn-danger': comment.vote_state == 'dv' }">
-                            <i class="fa fa-arrow-down text-muted"></i>
-                            {{ comment.dv }}
-                        </a>
-                        <a href="" class="btn btn-default btn-xs">
+                    <div class="m-t-sm">
+                        <vote-buttons object="comment" type="comment"
+                            btn-class="btn-xs"></vote-buttons>
+                        <a class="btn btn-default btn-xs">
                             <i class="fa fa-mail-reply text-muted"></i> odpowiedz
                         </a>
                     </div>
@@ -105,14 +97,8 @@
                         <div ng-bind-html="reply.text"></div>
 
                         <div class="m-t-sm">
-                            <a href="" class="btn btn-default btn-xs">
-                                <i class="fa fa-arrow-up text-muted"></i>
-                                {{ reply.uv }}
-                            </a>
-                            <a href="" ui-toggle-class="" class="btn btn-default btn-xs">
-                                <i class="fa fa-arrow-down text-muted"></i>
-                                {{ reply.dv }}
-                            </a>
+                            <vote-buttons object="reply" type="comment_reply"
+                                btn-class="btn-xs"></vote-buttons>
                             <a href="" class="btn btn-default btn-xs">
                                 <i class="fa fa-mail-reply text-muted"></i> odpowiedz
                             </a>
