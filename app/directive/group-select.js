@@ -1,30 +1,33 @@
 angular.module('app.directives').directive('groupSelect',
-        function($window, $document, Auth, Groups) {
+  function($window, $document, Auth, Groups) {
     function link (scope, element, attrs) {
-        scope.groups = [];
+      scope.groups = [];
+      scope.group = {};
 
-        scope.loadDefault = function() {
-            if (Auth.guest()) return;
+      scope.loadDefault = function() {
+        if (Auth.guest()) return;
 
-            scope.groups = Auth.user.subscribed_groups;
-        };
+        scope.groups = Auth.user.subscribed_groups;
+      };
 
-        scope.loadGroups = function(name) {
-            if (!name || name.length < 3) {
-                scope.loadDefault();
-                return;
-            }
+      scope.loadGroups = function(name) {
+        if (!name || name.length < 3) {
+          scope.loadDefault();
+          return;
+        }
 
-            scope.groups = Groups.getList({ name: name }).$object;
-        };
+        scope.groups = Groups.getList({ name: name }).$object;
+      };
 
-        scope.loadDefault();
+      scope.loadDefault();
     }
 
     return {
-        restrict: 'E',
-        scope: {},
-        templateUrl: 'directive/group-select.html',
-        link: link
+      restrict: 'E',
+      scope: {
+        group: '=bindGroup'
+      },
+      templateUrl: 'directive/group-select.html',
+      link: link
     };
-});
+  });

@@ -1,183 +1,182 @@
 <div class="bg-light lter b-b wrapper-md">
-    <div class="row">
-        <div class="col-sm-6 col-xs-12">
-            <h1 class="m-n font-thin h3 text-black">Wpisy</h1>
-        </div>
-        <div class="col-sm-6 text-right hidden-xs">
-            <button class="btn btn-sm btn-default btn-addon pull-right" ng-click="refresh()">
-                <i class="fa fa-refresh" ng-class="{ 'fa-spin': loading }"></i>
-                Odśwież
-            </button>
-
-            <div class="btn-group dropdown pull-right" dropdown>
-                <button class="btn btn-sm btn-default btn-addon dropdown-toggle pull-right m-r-sm"
-                        aria-haspopup="true" aria-expanded="false" dropdown-toggle>
-                    <i class="fa fa-sort"></i> Sortowanie <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href ng-click="sortBy('created_at')"><i class="icon-calendar m-r-sm"></i> Najnowsze</a></li>
-                    <li><a href ng-click="sortBy('score')"><i class="icon-trophy m-r-sm"></i> Wynik</a></li>
-                    <li><a href ng-click="sortBy('comments')"><i class="icon-bubbles m-r-sm"></i> Komentarze</a></li>
-                </ul>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-sm-6 col-xs-12">
+      <h1 class="m-n font-thin h3 text-black" translate>Wpisy</h1>
     </div>
+    <div class="col-sm-6 text-right hidden-xs">
+      <button class="btn btn-sm btn-default btn-addon pull-right" ng-click="refresh()">
+        <i class="fa fa-refresh" ng-class="{ 'fa-spin': loading }"></i>
+        <span translate>Odśwież</span>
+      </button>
+
+      <div class="btn-group dropdown pull-right" dropdown>
+        <button class="btn btn-sm btn-default btn-addon dropdown-toggle pull-right m-r-sm"
+                aria-haspopup="true" aria-expanded="false" dropdown-toggle>
+          <i class="fa fa-sort"></i> Sortowanie <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href ng-click="sortBy('created_at')"><i class="icon-calendar m-r-sm"></i> Najnowsze</a></li>
+          <li><a href ng-click="sortBy('score')"><i class="icon-trophy m-r-sm"></i> Wynik</a></li>
+          <li><a href ng-click="sortBy('comments')"><i class="icon-bubbles m-r-sm"></i> Komentarze</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="wrapper-md">
-    <div class="m-b b-l m-l-md streamline" ng-hide="!entries.length && Auth.guest()">
-        <div ng-if="Auth.check()">
-            <a class="pull-left thumb-sm avatar m-l-n-md">
-                <img ng-src="{{ Auth.user.avatar | cdn:'avatars':100:100  }}"
-                    alt="{{ Auth.user.name }}">
+  <div class="m-b b-l m-l-md streamline" ng-hide="!entries.length && Auth.guest()">
+    <div ng-if="Auth.check()">
+      <a class="pull-left thumb-sm avatar m-l-n-md">
+        <img ng-src="{{ Auth.user.avatar | cdn:'avatars':100:100  }}"
+             alt="{{ Auth.user.name }}">
+      </a>
+
+      <div class="m-l-lg panel b-a">
+        <form name="newEntryForm" ng-submit="addEntry(newEntry)" novalidate>
+          <div class="panel-heading pos-rlt b-b b-light">
+            <span class="arrow left"></span>
+            <a ui-sref="app.user({ user: Auth.user.name })">
+              {{ Auth.user.name }}
             </a>
+          </div>
 
-            <div class="m-l-lg panel b-a">
-                <form name="newEntryForm" ng-submit="addEntry(newEntry)" novalidate>
-                    <div class="panel-heading pos-rlt b-b b-light">
-                        <span class="arrow left"></span>
-                        <a ui-sref="app.user({ user: Auth.user.name })">
-                            {{ Auth.user.name }}
-                        </a>
-                    </div>
-
-                    <textarea auto-grow text-editor id="new-entry-box"
-                        class="form-control no-border" rows="3"
-                        placeholder="Tutaj wpisz swoją odpowiedź..."
-                        ng-model="newEntry.text" required>
+          <textarea auto-grow text-editor id="new-entry-box"
+                    class="form-control no-border" rows="3"
+                    placeholder="Tutaj wpisz swoją odpowiedź..."
+                    ng-model="newEntry.text" required>
                     </textarea>
 
-                    <div class="panel-footer bg-light lter">
-                      <button class="btn btn-info pull-right" type="submit"
-                              ladda="adding" ng-disabled="newEntryForm.$invalid"
-                              translate>
-                          Dodaj
-                      </button>
+          <div class="panel-footer bg-light lter">
+            <button class="btn btn-info pull-right" type="submit"
+                    ladda="adding" ng-disabled="newEntryForm.$invalid"
+                    translate>
+              Dodaj
+            </button>
 
-                      {{ newEntry.group }}
+            <group-select bind-group="newEntry.group"></group-select>
 
-                      <group-select bind-group="newEntry.group"></group-select>
-
-                      <ul class="nav nav-pills nav-sm"
-                          text-editor-buttons="#new-entry-box"></ul>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="entry" ng-repeat="entry in entries">
-            <a class="pull-left thumb-sm avatar m-l-n-md" ui-sref="app.user({ user: entry.user.name })">
-                <img ng-src="{{ entry.user.avatar | cdn:'avatars':100:100 }}"
-                    class="img-circle" alt="{{ entry.user.name }}">
-            </a>
-
-            <div class="m-l-lg panel b-a">
-                <div class="panel-heading pos-rlt b-b b-light">
-                    <span class="arrow left"></span>
-                    <a ui-sref="app.user({ user: entry.user.name })">{{ entry.user.name }}</a>
-
-                    <span class="text-muted m-l-sm pull-right">
-                        <i class="fa fa-clock-o"></i>
-                        <span am-time-ago="entry.created_at"></span>
-                    </span>
-
-                    <span class="text-muted m-l-sm pull-right">
-                        <i class="fa fa-tag"></i>
-                        {{ entry.group.name }}
-                    </span>
-                </div>
-                <div class="panel-body">
-                    <div ng-bind-html="entry.text" image-preview></div>
-
-                    <div class="m-t-sm">
-                        <vote-buttons object="entry" type="entry"
-                            btn-class="btn-xs"></vote-buttons>
-                        <a class="btn btn-default btn-xs" ng-if="Auth.check()"
-                            ng-click="showReplyBox(entry, entry)"
-                            move-focus-to="#reply-box-{{ entry._id }}">
-                            <i class="fa fa-mail-reply text-muted"></i> odpowiedz
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- show more replies -->
-            <div class="m-l-lg m-b" ng-if="entry.replies.length > 2">
-                <button class="btn btn-default btn-block" ng-if="!entry.visibleReplies" ng-click="entry.visibleReplies = entry.replies.length">
-                    <i class="fa fa-bars pull-left"></i>
-                    Pokaż pozostałe wpisy ({{ entry.replies.length-2 }} odpowiedzi)
-                    </button>
-            </div>
-            <!-- /show more replies -->
-
-            <!-- .comment-reply -->
-            <div class="m-l-lg" ng-repeat="reply in entry.replies | limitTo: (entry.visibleReplies || -2)">
-                <a class="pull-left thumb-sm avatar" ui-sref="app.user({ user: reply.user.name })">
-                    <img ng-src="http://static.strimoid.pl/uploads/100x100/avatars/{{ reply.user.avatar }}"
-                         alt="{{ reply.user.name }}">
-                </a>
-
-                <div class="m-l-xxl panel b-a">
-                    <div class="panel-heading pos-rlt b-b b-light">
-                        <span class="arrow left"></span>
-                        <a ui-sref="app.user({ user: reply.user.name })">{{ reply.user.name }}</a>
-
-                        <span class="text-muted m-l-sm pull-right">
-                            <i class="fa fa-clock-o"></i>
-                            <span am-time-ago="reply.created_at"></span>
-                        </span>
-                    </div>
-                    <div class="panel-body">
-                        <div ng-bind-html="reply.text" image-preview></div>
-
-                        <div class="m-t-sm">
-                            <vote-buttons object="reply" type="entry_reply"
-                                btn-class="btn-xs"></vote-buttons>
-                            <button class="btn btn-default btn-xs" ng-if="Auth.check()"
-                                ng-click="showReplyBox(entry, reply)"
-                                move-focus-to="#reply-box-{{ entry._id }}">
-                                <i class="fa fa-mail-reply text-muted"></i> odpowiedz
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- / .comment-reply -->
-
-            <!-- reply box -->
-            <div class="m-l-lg" ng-if="entry.showReplyBox">
-                <a class="pull-left thumb-sm avatar">
-                    <img ng-src="http://static.strimoid.pl/uploads/100x100/avatars/{{ Auth.user.avatar }}"
-                         alt="{{ Auth.user.name }}">
-                </a>
-
-                <div class="m-l-xxl panel b-a">
-                    <form novalidate ng-submit="addReply(entry)">
-                        <div class="panel-heading pos-rlt b-b b-light">
-                            <span class="arrow left"></span>
-                            <a href="">{{ Auth.user.name }}</a>
-
-                            <a href class="text-muted m-l-sm pull-right" ng-click="entry.showReplyBox = false">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-
-                        <textarea auto-grow text-editor ng-attr-id="reply-box-{{ entry._id }}"
-                            class="form-control no-border" rows="3"
-                            placeholder="Tutaj wpisz swoją odpowiedź..."
-                            ng-model="entry.newReply.text">
-                        </textarea>
-
-                        <div class="panel-footer bg-light lter">
-                          <button class="btn btn-info pull-right btn-sm">Odpowiedz</button>
-                          <ul class="nav nav-pills nav-sm" text-editor-buttons="#reply-box-{{ entry._id }}"></ul>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- /reply box -->
-        </div>
+            <ul class="nav nav-pills nav-sm"
+                text-editor-buttons="#new-entry-box"></ul>
+          </div>
+        </form>
+      </div>
     </div>
 
-    <!-- comment add form -->
+    <div class="entry" ng-repeat="entry in entries">
+      <a class="pull-left thumb-sm avatar m-l-n-md" ui-sref="app.user({ user: entry.user.name })">
+        <img ng-src="{{ entry.user.avatar | cdn:'avatars':100:100 }}"
+             class="img-circle" alt="{{ entry.user.name }}">
+      </a>
+
+      <div class="m-l-lg panel b-a">
+        <div class="panel-heading pos-rlt b-b b-light">
+          <span class="arrow left"></span>
+          <a ui-sref="app.user({ user: entry.user.name })">{{ entry.user.name }}</a>
+
+          <span class="text-muted m-l-sm pull-right">
+            <i class="fa fa-clock-o"></i>
+            <span am-time-ago="entry.created_at"></span>
+          </span>
+
+          <span class="text-muted m-l-sm pull-right">
+            <i class="fa fa-tag"></i>
+            {{ entry.group.name }}
+          </span>
+        </div>
+        <div class="panel-body">
+          <div ng-bind-html="entry.text" image-preview></div>
+
+          <div class="m-t-sm">
+            <vote-buttons object="entry" type="entry"
+                          btn-class="btn-xs"></vote-buttons>
+            <a class="btn btn-default btn-xs" ng-if="Auth.check()"
+               ng-click="showReplyBox(entry, entry)"
+               move-focus-to="#reply-box-{{ entry._id }}">
+              <i class="fa fa-mail-reply text-muted"></i> odpowiedz
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- show more replies -->
+      <div class="m-l-lg m-b" ng-if="entry.replies.length > 2">
+        <button class="btn btn-default btn-block" ng-if="!entry.visibleReplies"
+                ng-click="entry.visibleReplies = entry.replies.length">
+          <i class="fa fa-bars pull-left"></i>
+          Pokaż pozostałe wpisy ({{ entry.replies.length-2 }} odpowiedzi)
+        </button>
+      </div>
+      <!-- /show more replies -->
+
+      <!-- .entry-reply -->
+      <div class="m-l-lg" ng-repeat="reply in entry.replies | limitTo: (entry.visibleReplies || -2)">
+        <a class="pull-left thumb-sm avatar" ui-sref="app.user({ user: reply.user.name })">
+          <img ng-src="http://static.strimoid.pl/uploads/100x100/avatars/{{ reply.user.avatar }}"
+               alt="{{ reply.user.name }}">
+        </a>
+
+        <div class="m-l-xxl panel b-a">
+          <div class="panel-heading pos-rlt b-b b-light">
+            <span class="arrow left"></span>
+            <a ui-sref="app.user({ user: reply.user.name })">{{ reply.user.name }}</a>
+
+            <span class="text-muted m-l-sm pull-right">
+              <i class="fa fa-clock-o"></i>
+              <span am-time-ago="reply.created_at"></span>
+            </span>
+          </div>
+          <div class="panel-body">
+            <div ng-bind-html="reply.text" image-preview></div>
+
+            <div class="m-t-sm">
+              <vote-buttons object="reply" type="entry_reply"
+                            btn-class="btn-xs"></vote-buttons>
+              <button class="btn btn-default btn-xs" ng-if="Auth.check()"
+                      ng-click="showReplyBox(entry, reply)"
+                      move-focus-to="#reply-box-{{ entry._id }}">
+                <i class="fa fa-mail-reply text-muted"></i> odpowiedz
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- / .entry-reply -->
+
+      <!-- reply box -->
+      <div class="m-l-lg" ng-if="entry.showReplyBox">
+        <a class="pull-left thumb-sm avatar">
+          <img ng-src="http://static.strimoid.pl/uploads/100x100/avatars/{{ Auth.user.avatar }}"
+               alt="{{ Auth.user.name }}">
+        </a>
+
+        <div class="m-l-xxl panel b-a">
+          <form novalidate ng-submit="addReply(entry)">
+            <div class="panel-heading pos-rlt b-b b-light">
+              <span class="arrow left"></span>
+              <a href="">{{ Auth.user.name }}</a>
+
+              <a href class="text-muted m-l-sm pull-right" ng-click="entry.showReplyBox = false">
+                <i class="fa fa-times"></i>
+              </a>
+            </div>
+
+            <textarea auto-grow text-editor ng-attr-id="reply-box-{{ entry._id }}"
+                      class="form-control no-border" rows="3"
+                      placeholder="Tutaj wpisz swoją odpowiedź..."
+                      ng-model="entry.newReply.text">
+            </textarea>
+
+            <div class="panel-footer bg-light lter">
+              <button class="btn btn-info pull-right btn-sm">Odpowiedz</button>
+              <ul class="nav nav-pills nav-sm" text-editor-buttons="#reply-box-{{ entry._id }}"></ul>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- /reply box -->
+    </div>
+  </div>
+
+  <!-- comment add form -->
 </div>

@@ -2,6 +2,7 @@ angular.module('app.controllers').controller('EntryList', function($scope,
         $http, $stateParams, Restangular, SweetAlert, Entries) {
     $scope.loading = false;
     $scope.sort = 'created_at';
+    $scope.newEntry = {};
 
     $scope.refresh = function() {
         $scope.page = 1;
@@ -63,7 +64,7 @@ angular.module('app.controllers').controller('EntryList', function($scope,
 
         var newEntry = {
             text: entry.text,
-            group: entry.group._id
+            group: entry.group.selected._id
         };
 
         Entries.post(newEntry).then(function() {
