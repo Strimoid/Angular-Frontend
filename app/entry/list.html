@@ -36,26 +36,36 @@
                 <form name="newEntryForm" ng-submit="addEntry(newEntry)" novalidate>
                     <div class="panel-heading pos-rlt b-b b-light">
                         <span class="arrow left"></span>
-                        <a ui-sref="app.user({ user: Auth.user.name })">{{ Auth.user.name }}</a>
+                        <a ui-sref="app.user({ user: Auth.user.name })">
+                            {{ Auth.user.name }}
+                        </a>
                     </div>
 
                     <textarea auto-grow text-editor id="new-entry-box"
                         class="form-control no-border" rows="3"
-                        placeholder="Tutaj wpisz swoją odpowiedź..." ng-model="newEntry.text" required>
+                        placeholder="Tutaj wpisz swoją odpowiedź..."
+                        ng-model="newEntry.text" required>
                     </textarea>
 
                     <div class="panel-footer bg-light lter">
-                      <button class="btn btn-info pull-right" type="submit" ladda="adding" ng-disabled="newEntryForm.$invalid">Dodaj</button>
+                      <button class="btn btn-info pull-right" type="submit"
+                              ladda="adding" ng-disabled="newEntryForm.$invalid"
+                              translate>
+                          Dodaj
+                      </button>
 
-                      <group-select></group-select>
+                      {{ newEntry.group }}
 
-                      <ul class="nav nav-pills nav-sm" text-editor-buttons="#new-entry-box"></ul>
+                      <group-select bind-group="newEntry.group"></group-select>
+
+                      <ul class="nav nav-pills nav-sm"
+                          text-editor-buttons="#new-entry-box"></ul>
                     </div>
                 </form>
             </div>
         </div>
 
-        <div ng-repeat="entry in entries">
+        <div class="entry" ng-repeat="entry in entries">
             <a class="pull-left thumb-sm avatar m-l-n-md" ui-sref="app.user({ user: entry.user.name })">
                 <img ng-src="{{ entry.user.avatar | cdn:'avatars':100:100 }}"
                     class="img-circle" alt="{{ entry.user.name }}">
@@ -77,7 +87,7 @@
                     </span>
                 </div>
                 <div class="panel-body">
-                    <div ng-bind-html="entry.text"></div>
+                    <div ng-bind-html="entry.text" image-preview></div>
 
                     <div class="m-t-sm">
                         <vote-buttons object="entry" type="entry"
@@ -118,7 +128,7 @@
                         </span>
                     </div>
                     <div class="panel-body">
-                        <div ng-bind-html="reply.text"></div>
+                        <div ng-bind-html="reply.text" image-preview></div>
 
                         <div class="m-t-sm">
                             <vote-buttons object="reply" type="entry_reply"
