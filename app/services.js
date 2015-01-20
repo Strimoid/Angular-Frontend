@@ -77,13 +77,13 @@ angular.module('app.services', [])
         return socket;
     })
     .factory('Contents', function(Restangular) {
-        return Restangular.all('contents');
+        return Restangular.service('contents');
     })
     .factory('Groups', function(Restangular) {
-        return Restangular.all('groups');
+        return Restangular.service('groups');
     })
     .factory('Entries', function(Restangular) {
-        return Restangular.all('entries');
+        return Restangular.service('entries');
     })
     .factory('Users', function(Restangular) {
         return Restangular.service('users');
