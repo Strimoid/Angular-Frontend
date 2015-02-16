@@ -28,7 +28,7 @@ var app = angular.module('app', [
     'algoliasearch',
     'pubnub.angular.service'
   ])
-    .run(function ($rootScope, $state, $stateParams,
+    .run(function ($rootScope, $state, $stateParams, PubNub,
                    amMoment, Auth, Session, gettextCatalog) {
       $rootScope.$state = $state;
       $rootScope.$stateParams = $stateParams;
@@ -61,6 +61,11 @@ var app = angular.module('app', [
             Session.currentFolder = { _id: $stateParams.folder };
           }
         });
+
+      PubNub.init({
+        publish_key: 'pub-c-c7fe8f07-c4a8-41e4-8f6b-3b90adb40e4e',
+        subscribe_key: 'sub-c-c6949fbe-a943-11e4-ad17-0619f8945a4f '
+      });
     })
     .config(function(RestangularProvider) {
       RestangularProvider.setBaseUrl('https://strimoid.pl/api/v1');
@@ -77,7 +82,7 @@ var app = angular.module('app', [
       });
     })
     .config(function ($stateProvider, $urlRouterProvider, $controllerProvider,
-                      $compileProvider, $filterProvider, $provide, $stickyStateProvider) {
+                      $compileProvider, $filterProvider, $provide) {
       // lazy controller, directive and service
       app.controller = $controllerProvider.register;
       app.directive  = $compileProvider.directive;
@@ -89,59 +94,5 @@ var app = angular.module('app', [
     })
     .config(function($locationProvider){
       $locationProvider.html5Mode(true);
-    })
-    .config(function($tooltipProvider){
-      $tooltipProvider.setTriggers({'customEvent': 'customEvent'});
-    })
-  /**
-   * jQuery plugin config use ui-jq directive , config the js and css files that required
-   * key: function name of the jQuery plugin
-   * value: array of the css js file located
-   */
-    .constant('JQ_CONFIG', {
-      easyPieChart:   ['js/jquery/charts/easypiechart/jquery.easy-pie-chart.js'],
-      sparkline:      ['js/jquery/charts/sparkline/jquery.sparkline.min.js'],
-      plot:           ['js/jquery/charts/flot/jquery.flot.min.js',
-        'js/jquery/charts/flot/jquery.flot.resize.js',
-        'js/jquery/charts/flot/jquery.flot.tooltip.min.js',
-        'js/jquery/charts/flot/jquery.flot.spline.js',
-        'js/jquery/charts/flot/jquery.flot.orderBars.js',
-        'js/jquery/charts/flot/jquery.flot.pie.min.js'],
-      sortable:       ['js/jquery/sortable/jquery.sortable.js'],
-      nestable:       ['js/jquery/nestable/jquery.nestable.js',
-        'js/jquery/nestable/nestable.css'],
-      filestyle:      ['js/jquery/file/bootstrap-filestyle.min.js'],
-      slider:         ['js/jquery/slider/bootstrap-slider.js',
-        'js/jquery/slider/slider.css'],
-      chosen:         ['js/jquery/chosen/chosen.jquery.min.js',
-        'js/jquery/chosen/chosen.css'],
-      TouchSpin:      ['js/jquery/spinner/jquery.bootstrap-touchspin.min.js',
-        'js/jquery/spinner/jquery.bootstrap-touchspin.css'],
-      wysiwyg:        ['js/jquery/wysiwyg/bootstrap-wysiwyg.js',
-        'js/jquery/wysiwyg/jquery.hotkeys.js'],
-      dataTable:      ['js/jquery/datatables/jquery.dataTables.min.js',
-        'js/jquery/datatables/dataTables.bootstrap.js',
-        'js/jquery/datatables/dataTables.bootstrap.css'],
-      vectorMap:      ['js/jquery/jvectormap/jquery-jvectormap.min.js',
-        'js/jquery/jvectormap/jquery-jvectormap-world-mill-en.js',
-        'js/jquery/jvectormap/jquery-jvectormap-us-aea-en.js',
-        'js/jquery/jvectormap/jquery-jvectormap.css'],
-      footable:       ['js/jquery/footable/footable.all.min.js',
-        'js/jquery/footable/footable.core.css']
-    }
-  )
-
-    .constant('MODULE_CONFIG', {
-      select2:        ['js/jquery/select2/select2.css',
-        'js/jquery/select2/select2-bootstrap.css',
-        'js/jquery/select2/select2.min.js',
-        'js/modules/ui-select2.js']
-    }
-  )
-    .config(function(PubNub) {
-      PubNub.init({
-        publish_key: 'pub-c-c7fe8f07-c4a8-41e4-8f6b-3b90adb40e4e',
-        subscribe_key: 'sub-c-c6949fbe-a943-11e4-ad17-0619f8945a4f '
-      });
     })
   ;
