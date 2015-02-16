@@ -87,4 +87,7 @@ angular.module('app.services', [])
     })
     .factory('Users', function(Restangular) {
         return Restangular.service('users');
-    });
+    })
+  .factory('Search', function(algolia, ALGOLIA_APP_ID, ALGOLIA_KEY) {
+    return algolia.Client(ALGOLIA_APP_ID, ALGOLIA_KEY).initIndex('prod_contents');
+  });

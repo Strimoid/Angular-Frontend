@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
 var mainBowerFiles = require('main-bower-files');
+var browserSync = require('browser-sync');
 
 gulp.task('default', ['build', 'watch'], function() {});
 gulp.task('build', ['deps-css', 'deps-js', 'html', 'css', 'js']);
@@ -73,6 +74,14 @@ gulp.task('translations', function () {
         .pipe(plugins.angularGettext.compile())
         .pipe(plugins.concat('translations.js'))
         .pipe(gulp.dest('dist/js/'));
+});
+
+gulp.task('browser-sync', function() {
+  browserSync({
+    server: {
+      baseDir: "./"
+    }
+  });
 });
 
 gulp.task('watch', function() {

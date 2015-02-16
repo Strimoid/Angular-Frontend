@@ -120,5 +120,10 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: 'conversation/list.html',
             //controller: 'ConversationList'
         })
+      .state('app.search', {
+        url: '/szukaj',
+        templateUrl: 'search/search.html',
+        controller: 'Search'
+      })
         ;
 });

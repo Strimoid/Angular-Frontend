@@ -1,0 +1,32 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3"><i class="icon-magnifier i-sm m-r-sm"></i> Search</h1>
+</div>
+
+<div class="wrapper-md">
+  <div class="input-group">
+    <input type="text" class="form-control input-lg" placeholder="Type keyword"
+           ng-model="query" ng-model-options="{ debounce: 500 }">
+    <span class="input-group-btn">
+      <button class="btn btn-lg btn-default" type="button">Search</button>
+    </span>
+  </div>
+  <tabset class="tab-container">
+    <tab>
+      <tab-heading>
+        Contents <span class="badge badge-sm m-l-xs">0</span>
+      </tab-heading>
+      <ul class="list-group list-group-alt list-group-lg no-borders pull-in m-b-none">
+        <li class="list-group-item" ng-repeat="hit in hits">
+          <a href="/c/{{ hit._id }}" class="pull-left thumb-md m-r">
+            <img ng-src="{{ hit.thumbnail | cdn:'thumbnails':500:250 }}" class="r" ng-if="hit.thumbnail">
+          </a>
+          <div class="clear">
+            <a href="/c/{{ hit._id }}" class="h4 text-primary m-b-sm block">{{ hit.title }}</a>
+            <div>{{ hit.description }}</div>
+          </div>
+        </li>
+      </ul>
+      <p ng-show="!hits.length" class="text-center">No results are matching your query.</p>
+    </tab>
+  </tabset>
+</div>
