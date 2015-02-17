@@ -80,7 +80,7 @@ gulp.task('js', function() {
 
 gulp.task('index', function () {
   var sources = gulp.src([
-    './dist/**/*.js', './dist/**/*.css'
+    './dist/**/deps-*.js','./dist/**/*.js', './dist/**/*.css'
   ], {read: false});
 
   return gulp.src('index.html')
