@@ -2,9 +2,19 @@ var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
 var mainBowerFiles = require('main-bower-files');
 var browserSync = require('browser-sync');
+var runSequence = require('run-sequence');
+var del = require('del');
 
 gulp.task('default', ['build', 'watch'], function() {});
 gulp.task('build', ['deps-css', 'deps-js', 'html', 'css', 'js']);
+
+gulp.task('build', function() {
+  runSequence('clean', ['deps-css', 'deps-js', 'html', 'css', 'js'], 'index');
+});
+
+gulp.task('clean', function () {
+  del(['./dist/**/*.js', './dist/**/*.css']);
+});
 
 gulp.task('deps-css', function() {
     return gulp.src(mainBowerFiles({ filter: /\.css$/ }))
@@ -12,6 +22,7 @@ gulp.task('deps-css', function() {
         .pipe(plugins.concat('deps.css'))
         .pipe(plugins.autoprefixer({ browsers: ['last 2 versions'] }))
         .pipe(plugins.minifyCss())
+        .pipe(plugins.rev())
         .pipe(plugins.sourcemaps.write('./'))
         .pipe(gulp.dest('dist/css/'));
 });
@@ -21,6 +32,7 @@ gulp.task('deps-js', function() {
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.concat('deps.js'))
         .pipe(plugins.uglify())
+        .pipe(plugins.rev())
         .pipe(plugins.sourcemaps.write('./'))
         .pipe(gulp.dest('dist/js/'));
 });
@@ -39,6 +51,7 @@ gulp.task('html', function () {
             module: 'app.templates',
             standalone: true
         }))
+        .pipe(plugins.rev())
         .pipe(gulp.dest('dist/js/'));
 });
 
@@ -48,6 +61,7 @@ gulp.task('css', function() {
         .pipe(plugins.autoprefixer('last 2 versions'))
         .pipe(plugins.concat('style.css'))
         .pipe(plugins.minifyCss())
+        .pipe(plugins.rev())
         .pipe(plugins.sourcemaps.write('./'))
         .pipe(gulp.dest('dist/css/'));
 });
@@ -59,8 +73,19 @@ gulp.task('js', function() {
         //.pipe(plugins.traceur())
         .pipe(plugins.concat('app.js'))
         //.pipe(plugins.uglify())
+        .pipe(plugins.rev())
         .pipe(plugins.sourcemaps.write('./'))
         .pipe(gulp.dest('dist/js/'));
+});
+
+gulp.task('index', function () {
+  var sources = gulp.src([
+    './dist/**/*.js', './dist/**/*.css'
+  ], {read: false});
+
+  return gulp.src('index.html')
+    .pipe(plugins.inject(sources, {ignorePath: 'dist'}))
+    .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('pot', function () {
