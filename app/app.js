@@ -64,7 +64,8 @@ var app = angular.module('app', [
 
       PubNub.init({
         publish_key: 'pub-c-c7fe8f07-c4a8-41e4-8f6b-3b90adb40e4e',
-        subscribe_key: 'sub-c-c6949fbe-a943-11e4-ad17-0619f8945a4f '
+        subscribe_key: 'sub-c-c6949fbe-a943-11e4-ad17-0619f8945a4f',
+        ssl: true
       });
     })
     .config(function(RestangularProvider) {
